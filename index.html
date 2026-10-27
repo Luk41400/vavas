@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VALORANT // PROTOCOL TACTICAL HUB - Análise, Guias Pro & Lore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-darkest: #080b0e;
+      --bg-dark: #0f1923;
+      --bg-card: #151f2b;
+      --bg-card-hover: #1c2938;
+      --red-riot: #ff4655;
+      --red-hover: #ff2b3d;
+      --cyan-radiant: #00f5d4;
+      --gold-meta: #f5a623;
+      --text-main: #ece8e1;
+      --text-muted: #8b97a2;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(255, 70, 85, 0.35);
+      --font-display: 'Chakra Petch', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-darkest);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 70, 85, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 245, 212, 0.03) 0%, transparent 40%),
+        linear-gradient(to right, rgba(255,255,255,0.01) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.01) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-darkest);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2a3744;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--red-riot);
+    }
+
+    /* Top Bar */
+    .top-ticker {
+      background: #06090c;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 6px 24px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+    }
+    .ticker-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--cyan-radiant);
+    }
+    .ticker-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cyan-radiant);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan-radiant);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+
+    /* Header Nav */
+    header {
+      background: rgba(15, 25, 35, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 24px;
+    }
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 68px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--red-riot);
+      clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+    .brand-text h1 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 1.5px;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .brand-text span {
+      font-size: 0.68rem;
+      color: var(--cyan-radiant);
+      font-family: var(--font-mono);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .nav-btn.active {
+      color: var(--red-riot);
+      background: rgba(255, 70, 85, 0.08);
+    }
+    .nav-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--red-riot);
+      box-shadow: 0 0 10px var(--red-riot);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* Section Control */
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tab-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero / Dashboard */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(21, 31, 43, 0.95), rgba(15, 25, 35, 0.95)), 
+                  radial-gradient(circle at top right, rgba(255, 70, 85, 0.15), transparent 60%);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--red-riot);
+      padding: 36px 40px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan-radiant);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      letter-spacing: 1px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .hero-title span {
+      color: var(--red-riot);
+    }
+    .hero-desc {
+      color: var(--text-muted);
+      max-width: 750px;
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+    }
+    .stat-item {
+      background: rgba(8, 11, 14, 0.6);
+      padding: 14px 18px;
+      border-radius: 6px;
+      border-left: 2px solid var(--cyan-radiant);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    /* Grid & Cards */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 24px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 70, 85, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+    }
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-s { background: rgba(255, 70, 85, 0.2); color: var(--red-riot); border: 1px solid var(--red-riot); }
+    .badge-a { background: rgba(0, 245, 212, 0.15); color: var(--cyan-radiant); border: 1px solid var(--cyan-radiant); }
+    .badge-info { background: rgba(245, 166, 35, 0.15); color: var(--gold-meta); border: 1px solid var(--gold-meta); }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Section Titles */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .section-head h2 span {
+      color: var(--red-riot);
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      margin-right: 8px;
+    }
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* Table Styles */
+    .tactical-table-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 28px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    thead {
+      background: #0d151e;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    th {
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--cyan-radiant);
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Agent Roster & Selector */
+    .role-filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill:hover {
+      background: var(--bg-card-hover);
+      color: #fff;
+    }
+    .filter-pill.active {
+      background: var(--red-riot);
+      color: #fff;
+      border-color: var(--red-riot);
+    }
+
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .agent-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .agent-card-item:hover, .agent-card-item.selected {
+      border-color: var(--red-riot);
+      background: var(--bg-card-hover);
+      box-shadow: 0 0 15px rgba(255, 70, 85, 0.15);
+    }
+    .agent-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .agent-name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .agent-role-tag {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: #090e13;
+      color: var(--cyan-radiant);
+    }
+
+    /* Modal / Inspector Box */
+    .agent-inspector {
+      background: #0d151e;
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .inspector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+    .inspector-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Economy Calculator */
+    .calc-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .calc-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .input-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .input-group input, .input-group select {
+      width: 100%;
+      background: #080b0e;
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+    }
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--red-riot);
+    }
+    .calc-btn {
+      background: var(--red-riot);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .calc-btn:hover {
+      background: var(--red-hover);
+    }
+    .verdict-box {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 6px;
+      background: #080c10;
+      border-left: 4px solid var(--cyan-radiant);
+    }
+    .verdict-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    /* Glossary / Search */
+    .search-bar-wrap {
+      margin-bottom: 24px;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 20px;
+      border-radius: 6px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--red-riot);
+    }
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .term-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 18px;
+    }
+    .term-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--red-riot);
+      margin-bottom: 4px;
+    }
+    .term-def {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .term-example {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--cyan-radiant);
+      background: #080c10;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    /* Lore Dossier */
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 900px) {
+      .dossier-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: #06090c;
+      padding: 36px 24px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      color: var(--red-riot);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Realtime Bar -->
+  <div class="top-ticker">
+    <div class="ticker-live">
+      <span class="ticker-dot"></span>
+      <span>VCT COMPETITIVE PROTOCOL ACTIVE // PATCH 9.x COMPLIANT</span>
+    </div>
+    <div>SESSÃO DE COMANDO: ANALISTA DE E-SPORTS</div>
+    <div>TERMINAL REGIONAL: BRASIL // SÃO PAULO [BR]</div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="brand" onclick="switchTab('home')">
+        <div class="brand-icon">V</div>
+        <div class="brand-text">
+          <h1>VALORANT // HUB</h1>
+          <span>TACTICAL ESPORTS MATRIX</span>
+        </div>
+      </a>
+      <nav>
+        <button class="nav-btn active" onclick="switchTab('home')">Terminal Home</button>
+        <button class="nav-btn" onclick="switchTab('lore')">Universo & Lore</button>
+        <button class="nav-btn" onclick="switchTab('agents')">Agentes & Pro-Guides</button>
+        <button class="nav-btn" onclick="switchTab('maps')">Mapas & Rotações</button>
+        <button class="nav-btn" onclick="switchTab('economy')">Calculadora de Economia</button>
+        <button class="nav-btn" onclick="switchTab('glossary')">Dicionário Tático</button>
+        <button class="nav-btn" onclick="switchTab('meta')">Meta Report VCT</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- TAB 1: HOME -->
+    <section id="tab-home" class="tab-section active">
+      <div class="hero-banner">
+        <span class="hero-tag">// CENTRAL TÁTICA DE ALTO RENDIMENTO</span>
+        <h2 class="hero-title">DOMINE O MACROGAME. <span>VENÇA O ROUND.</span></h2>
+        <p class="hero-desc">
+          O portal definitivo para jogadores competitivos, analistas e treinadores de VALORANT. Análise de telemetria profissional, guias de rotação de bomb sites, economia de créditos e o cânone do Protocolo VALORANT.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="calc-btn" onclick="switchTab('agents')">EXPLORAR GUIAS DE AGENTES</button>
+          <button class="calc-btn" style="background: transparent; border: 1px solid var(--cyan-radiant); color: var(--cyan-radiant);" onclick="switchTab('economy')">CALCULADORA DE CRÉDITOS</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">74.2%</div>
+            <div class="stat-label">Pick Rate Omen (VCT)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3.900</div>
+            <div class="stat-label">Créditos de Segurança (Meta Eco)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1-3-1</div>
+            <div class="stat-label">Default Canônico Ascent</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">Terra Ω</div>
+            <div class="stat-label">Ameaça Interdimensional</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2><span>// 01</span> PILARES DO ECOSSISTEMA</h2>
+        <span class="section-subtitle">ARQUITETURA DE RETENÇÃO E ALTA PERFORMANCE</span>
+      </div>
+
+      <div class="grid-4">
+        <div class="card" onclick="switchTab('lore')" style="cursor: pointer;">
+          <span class="card-badge badge-info">LORE PROFISSIONAL</span>
+          <h3>Universo & Protocolo</h3>
+          <p>A Primeira Luz, a crise energética global da Radianita e a guerra secreta entre Terra Alpha e Terra Ômega.</p>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan-radiant);">Acessar Arquivos Confidenciais &rarr;</span>
+        </div>
+
+        <div class="card" onclick="switchTab('agents')" style="cursor: pointer;">
+          <span class="card-badge badge-s">MICROGAME PRO</span>
+          <h3>Guias de Agentes</h3>
+          <p>Kits técnicos, contadores de cooldown, combos com sincronia perfeita e erros graves de elo baixo para corrigir agora.</p>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--red-riot);">Ver Fichas de Habilidades &rarr;</span>
+        </div>
+
+        <div class="card" onclick="switchTab('maps')" style="cursor: pointer;">
+          <span class="card-badge badge-a">MACROGAME</span>
+          <h3>Mapas & Rotações</h3>
+          <p>Anatomia de Ascent e outros pontos críticos, defaults 1-3-1, gatilhos de rotação imediata e playbooks de retake.</p>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan-radiant);">Consultar Rotas Táticas &rarr;</span>
+        </div>
+
+        <div class="card" onclick="switchTab('economy')" style="cursor: pointer;">
+          <span class="card-badge badge-s">DECISÃO ECONÔMICA</span>
+          <h3>Calculadora de Economia</h3>
+          <p>Simulador interativo de Full Buy, Eco, Force Buy e Bonus Round de acordo com o saldo do time.</p>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold-meta);">Calcular Próximo Round &rarr;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: LORE -->
+    <section id="tab-lore" class="tab-section">
+      <div class="section-head">
+        <h2><span>// 02</span> UNIVERSO & ARQUIVOS CONFIDENCIAIS DO PROTOCOLO</h2>
+        <span class="section-subtitle">CANON OFICIAL: A PRIMEIRA LUZ & GUERRA ESPELHO</span>
+      </div>
+
+      <div class="grid-4" style="grid-template-columns: 1fr 1fr; margin-bottom: 28px;">
+        <div class="card">
+          <span class="card-badge badge-info">EVENTO CATACLÍSMICO</span>
+          <h3 style="color: var(--cyan-radiant);">A Grande Crise: A Primeira Luz</h3>
+          <p>
+            No início do século XXI, emissões luminescentes inexplicáveis romperam a atmosfera terrestre. Este fenômeno mundial, batizado de <strong>A Primeira Luz</strong>, introduziu a <strong>Radianita</strong> — uma substância translúcida dotada de densidade energética incomensurável.
+          </p>
+          <p>
+            O evento modificou a estrutura biológica de civis ao redor do globo, despertando dons sobre-humanos psíquicos e cinéticos: nasciam os <strong>Radiantes</strong>. Concomitantemente, a multinacional <strong>Corporação Reino</strong> monopolizou a extração do mineral, transformando cidades inteiras e gerando tensões de soberania global.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="card-badge badge-s">COLISÃO DE REALIDADES</span>
+          <h3 style="color: var(--red-riot);">Terra Alpha vs. Terra Ômega</h3>
+          <p>
+            O verdadeiro conflito das partidas competitivas não é entre terroristas e antiterroristas: é uma <strong>guerra pela sobrevivência entre duas dimensões paralelas</strong>.
+          </p>
+          <p>
+            A <strong>Terra Ômega (Mundo Espelho)</strong> sofreu um colapso geológico acelerado e necessita drenar as reservas de Radianita da nossa dimensão (<strong>Terra Alpha</strong>). Os agentes de Ômega usam a <strong>Spike</strong> — um compressor quântico de alta densidade que teletransporta o minério do solo Alpha direto para os reatores de Ômega. Defensores Alpha lutam pelo desarmamento para evitar o esgotamento do planeta.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2><span>// 02.B</span> DOSSIÊ BIOGRÁFICO DE OPERAÇÃO</h2>
+        <span class="section-subtitle">FICHA AUTOMATIZADA DO PROTOCOLO VALORANT</span>
+      </div>
+
+      <div class="dossier-grid">
+        <div style="border-right: 1px solid var(--border-subtle); padding-right: 20px;">
+          <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--red-riot); margin-bottom: 4px;">OMEN</h3>
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan-radiant); margin-bottom: 16px;">DESIGNATION: AGENTE 03 // FUNDADOR</div>
+          
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;"><strong>Nome Real:</strong> Desconhecido (Fragmentos: "John")</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;"><strong>Status Biológico:</strong> Radiante Espectral / Fenda Quântica</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;"><strong>Origem Geográfica:</strong> Apátrida / Instalação Secreta Reino</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;"><strong>Função Tática:</strong> Controlador de Campo</p>
+
+          <div style="background: #080c10; padding: 12px; border-radius: 4px; font-size: 0.8rem; font-family: var(--font-mono); border-left: 2px solid var(--red-riot);">
+            "Eu sou o que sobrou quando tudo foi reduzido a cinzas e sombras."
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 8px; color: #fff;">Histórico de Recrutamento & Contexto Canônico</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+            Vítima de um acidente desastroso nos laboratórios clandestinos da Corporação Reino, Omen foi desintegrado em nível atômico e recomposto por Radianita condensada com tecido de sombras. Resgatado por Sabine Callas (<strong>Viper</strong>), ele mantém sua forma física coesa apenas por meio de sua armadura de contenção e pura força de vontade psíquica.
+          </p>
+
+          <h4 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 8px; color: #fff;">Rede de Relações e Linhas de Diálogo Críticas</h4>
+          <ul style="list-style: none; font-size: 0.9rem;">
+            <li style="margin-bottom: 10px; padding: 8px; background: rgba(255,255,255,0.02); border-radius: 4px;">
+              <strong style="color: var(--cyan-radiant);">Viper (Sabine):</strong> Ligação pré-catástrofe profunda. Viper carrega culpa explícita pelo que aconteceu a ele. Diálogo: <em>"Sabine, você ainda lembra de quem éramos antes do fogo?"</em>
+            </li>
+            <li style="margin-bottom: 10px; padding: 8px; background: rgba(255,255,255,0.02); border-radius: 4px;">
+              <strong style="color: var(--red-riot);">Sage (Ling Ying Wei):</strong> Oposição moral. Omen condena as ressurreições de Sage, alertando que ela retira forças do mesmo vácuo espectral em que ele agoniza. Diálogo: <em>"Sage, o que você devolve à vida não vem de graça."</em>
+            </li>
+            <li style="padding: 8px; background: rgba(255,255,255,0.02); border-radius: 4px;">
+              <strong style="color: var(--gold-meta);">Iso (Zhao Mingrui):</strong> Respeito tácito entre assassinos habituados ao isolamento sensorial extremo.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: AGENTES -->
+    <section id="tab-agents" class="tab-section">
+      <div class="section-head">
+        <h2><span>// 03</span> INTELIGÊNCIA DE AGENTES & GUIAS DE ALTA PERFORMANCE</h2>
+        <span class="section-subtitle">KITS DE HABILIDADES, COMBOS PRO E CONTRA-INDICAÇÕES</span>
+      </div>
+
+      <div class="role-filter-bar">
+        <button class="filter-pill active" onclick="filterRole('all')">Todos os Agentes</button>
+        <button class="filter-pill" onclick="filterRole('Controlador')">Controladores</button>
+        <button class="filter-pill" onclick="filterRole('Duelista')">Duelistas</button>
+        <button class="filter-pill" onclick="filterRole('Iniciador')">Iniciadores</button>
+        <button class="filter-pill" onclick="filterRole('Sentinela')">Sentinelas</button>
+      </div>
+
+      <div class="agents-grid" id="agents-grid-container">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Detail Box for selected Agent -->
+      <div id="agent-detail-view" class="agent-inspector">
+        <!-- Dynamically injected -->
+      </div>
+    </section>
+
+    <!-- TAB 4: MAPAS -->
+    <section id="tab-maps" class="tab-section">
+      <div class="section-head">
+        <h2><span>// 04</span> ESTRATÉGIA DE MAPAS & MACROGAME COMPETITIVO</h2>
+        <span class="section-subtitle">ANATOMIA TÁTICA, DEFAULTS E DIRETRIZES DE RETAKE</span>
+      </div>
+
+      <div class="role-filter-bar">
+        <button class="filter-pill active" onclick="selectMap('ascent')">Ascent (Destaque)</button>
+        <button class="filter-pill" onclick="selectMap('bind')">Bind</button>
+        <button class="filter-pill" onclick="selectMap('haven')">Haven</button>
+        <button class="filter-pill" onclick="selectMap('lotus')">Lotus</button>
+      </div>
+
+      <div id="map-content-container">
+        <!-- Default: Ascent -->
+        <div class="card" style="margin-bottom: 24px; border-left: 4px solid var(--cyan-radiant);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="font-size: 1.8rem; color: #fff;">ASCENT // ITÁLIA [MAP POOL ATIVO]</h3>
+            <span class="card-badge badge-s">TIER S: OMEN & JETT</span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            O mapa de referência de fundamentos táticos de VALORANT. Caracterizado por portas mecânicas acionáveis e uma vasta área central cuja posse define 70% das probabilidades de vitória do round.
+          </p>
+        </div>
+
+        <div class="grid-4" style="grid-template-columns: 1fr 1fr;">
+          <div class="card">
+            <span class="card-badge badge-info">ANATOMIA CRÍTICA</span>
+            <h3 style="color: var(--cyan-radiant);">Chokepoints & Controle do Meio</h3>
+            <p><strong>Pátio do Meio (Mid Courtyard):</strong> Dominar o Meio permite cortar a rotação defensiva pelo Spawn e viabiliza split-attacks tanto para o bomb A (via Árvore/Catwalk) quanto para o bomb B (via Mercado).</p>
+            <p><strong>A-Main e B-Main:</strong> Gargalos estreitos suscetíveis a utilitários de dano sustentado (Granadas, Molotovs e Flechas de Choque). Defensores utilizam a parede fina de B-Main para spams de penetração pesada (Odin/Ares).</p>
+          </div>
+
+          <div class="card">
+            <span class="card-badge badge-s">PADRÃO OFENSIVO</span>
+            <h3 style="color: var(--red-riot);">Default Canônico (1-3-1)</h3>
+            <p><strong>1 no B-Main:</strong> Lurker ou Sentinela joga silencioso para travar qualquer avanço rápido da defesa e punir agressão desavisada.</p>
+            <p><strong>3 no Meio (Core):</strong> Controlador, Iniciador e Duelista usam utilitário para fumar Top Mid / Mercado e assegurar o controle das conexões.</p>
+            <p><strong>1 no A-Main:</strong> Coleta o orbe da ultimate e contesta a linha de visão do A-Lobby.</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+          <span class="card-badge badge-info">DIRETRIZ DE DECISÃO</span>
+          <h3 style="color: var(--gold-meta); margin-bottom: 12px;">Gatilhos de Rotação Imediata & Protocolo de Retake</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: #fff; margin-bottom: 6px;">Sinais Claros para Rotacionar:</h4>
+              <ul style="font-size: 0.9rem; color: var(--text-muted); padding-left: 18px;">
+                <li style="margin-bottom: 6px;"><strong>Esgotamento de Recursos:</strong> A defesa gastou 2 smokes de Omen e o Nanoenxame de Killjoy nos primeiros 15s. Não force: rotacione pelo meio dominado.</li>
+                <li style="margin-bottom: 6px;"><strong>Pick no Meio:</strong> O Duelista conquistou First Blood no Top Mid. É o sinal verde automático para split Árvore -> A-Site.</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: #fff; margin-bottom: 6px;">Retake do Bomb A (Defesa):</h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Nunca faça retake descompassado (1 por 1). A coordenação exige avanço sincronizado de duas pontas: <strong>Spawn Defensor</strong> e <strong>Porta da Árvore</strong>. O controlador fuma a entrada do A-Main cortando o pós-plant longo, enquanto o iniciador limpa Hell e Gerador com recon.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: ECONOMIA -->
+    <section id="tab-economy" class="tab-section">
+      <div class="section-head">
+        <h2><span>// 05</span> GERENCIADOR ECONÔMICO & CALCULADORA TÁTICA</h2>
+        <span class="section-subtitle">REGRA DOS 3.900 CRÉDITOS E TOMADA DE DECISÃO DO ROUND</span>
+      </div>
+
+      <div class="calc-container">
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 16px; color: var(--cyan-radiant);">
+          SIMULADOR DE DECISÃO DE COMPRA DO TIME
+        </h3>
+        <div class="calc-inputs">
+          <div class="input-group">
+            <label>Créditos Médios do Time</label>
+            <input type="number" id="teamCredits" value="2600" step="100" min="0" max="9000">
+          </div>
+          <div class="input-group">
+            <label>Sequência Atual de Derrotas</label>
+            <select id="lossStreak">
+              <option value="0">Vencemos o último round (+3000)</option>
+              <option value="1">1 derrota consecutiva (+1900)</option>
+              <option value="2">2 derrotas consecutivas (+2400)</option>
+              <option value="3" selected>3+ derrotas consecutivas (+2900 - Máximo)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Momento da Partida</label>
+            <select id="matchContext">
+              <option value="normal">Round Regular da Partida</option>
+              <option value="round2">Round 2 (Após vitória no Pistol)</option>
+              <option value="round3">Round 3 (Possível Bonus Round)</option>
+              <option value="last_half">Último round da metade (R12 ou R24)</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calculateEconomy()">EXECUTAR ANÁLISE ECONÔMICA</button>
+
+        <div id="ecoVerdict" class="verdict-box">
+          <div class="verdict-title" id="verdictHeadline" style="color: var(--cyan-radiant);">ECO ROUND (ECONOMIA ESTRITA)</div>
+          <p id="verdictText" style="color: var(--text-muted); font-size: 0.95rem;">
+            Os créditos médios atuais não sustentam compra de fuzis sem comprometer a capacidade no round seguinte. Economize e preserve no mínimo 3.900 créditos garantidos para o próximo round.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2><span>// 05.B</span> OS 4 ESTADOS DE COMPRA CANÔNICOS</h2>
+        <span class="section-subtitle">TABELA DE PADRÕES OPERACIONAIS</span>
+      </div>
+
+      <div class="tactical-table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Estado de Compra</th>
+              <th>Custo Médio / Jogador</th>
+              <th>Armamento Típico</th>
+              <th>Comportamento Tático Esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--red-riot);">Full Buy</strong></td>
+              <td>4.300 a 4.500 CR</td>
+              <td>Vandal / Phantom + Escudo Pesado + Kit Pleno</td>
+              <td>Confronto direto simétrico. Máxima cobrança de trades e retakes coordenados.</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--gold-meta);">Eco Round</strong></td>
+              <td>0 a 800 CR</td>
+              <td>Classic / Ghost + 0 ou 1 Habilidade</td>
+              <td>Jogar em grupo para tentar pescar uma arma inimiga sem gastar a reserva futura.</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--cyan-radiant);">Force Buy</strong></td>
+              <td>1.800 a 3.200 CR</td>
+              <td>Spectre / Bulldog / Outlaw + Meio Escudo</td>
+              <td>Rodada de quebra de ritmo. Se perder, a economia do round seguinte fica zerada.</td>
+            </tr>
+            <tr>
+              <td><strong style="color: #fff;">Bonus Round</strong></td>
+              <td>0 CR adicional</td>
+              <td>Manutenção de Spectres do Round 2</td>
+              <td>Causar dano econômico no primeiro rifle do adversário sem investir capital.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 6: GLOSSÁRIO -->
+    <section id="tab-glossary" class="tab-section">
+      <div class="section-head">
+        <h2><span>// 06</span> DICIONÁRIO TÁTICO DE CALLOUTS & GÍRIAS</h2>
+        <span class="section-subtitle">LINGUAGEM OFICIAL DE COMUNICAÇÃO DE E-SPORTS</span>
+      </div>
+
+      <div class="search-bar-wrap">
+        <input type="text" class="search-input" id="glossarySearch" placeholder="Digite um termo (ex: Trade, Default, Lurker, Lineup, Crossfire)..." oninput="filterGlossary()">
+      </div>
+
+      <div class="terms-grid" id="terms-container">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 7: META REPORT -->
+    <section id="tab-meta" class="tab-section">
+      <div class="section-head">
+        <h2><span>// 07</span> META REPORT VCT // TELEMETRIA DE CAMPEONATO</h2>
+        <span class="section-subtitle">DADOS ESTATÍSTICOS DO CIRCUITO INTERNACIONAL OFICIAL</span>
+      </div>
+
+      <div class="tactical-table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Agente</th>
+              <th>Classe</th>
+              <th>Pick Rate Global</th>
+              <th>Win Rate Pro</th>
+              <th>Status no Meta</th>
+              <th>Melhor Mapa (Tier S)</th>
+              <th>Tendência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Omen</strong></td>
+              <td>Controlador</td>
+              <td><span style="color: var(--red-riot); font-weight: 700;">74.2%</span></td>
+              <td>52.8%</td>
+              <td><span class="card-badge badge-s" style="position: static;">Indispensável</span></td>
+              <td>Ascent / Lotus</td>
+              <td style="color: var(--cyan-radiant);">↗ Em Alta</td>
+            </tr>
+            <tr>
+              <td><strong>Jett</strong></td>
+              <td>Duelista</td>
+              <td><span style="color: var(--red-riot); font-weight: 700;">68.5%</span></td>
+              <td>51.4%</td>
+              <td><span class="card-badge badge-s" style="position: static;">Pilar Estrutural</span></td>
+              <td>Breeze / Ascent</td>
+              <td>→ Estável</td>
+            </tr>
+            <tr>
+              <td><strong>Killjoy</strong></td>
+              <td>Sentinela</td>
+              <td><span style="color: var(--cyan-radiant); font-weight: 700;">61.1%</span></td>
+              <td>53.2%</td>
+              <td><span class="card-badge badge-s" style="position: static;">Âncora Absoluta</span></td>
+              <td>Haven / Ascent</td>
+              <td>→ Estável</td>
+            </tr>
+            <tr>
+              <td><strong>Sova</strong></td>
+              <td>Iniciador</td>
+              <td><span style="color: var(--cyan-radiant); font-weight: 700;">58.7%</span></td>
+              <td>50.9%</td>
+              <td><span class="card-badge badge-a" style="position: static;">Dominante de Info</span></td>
+              <td>Ascent / Icebox</td>
+              <td>→ Estável</td>
+            </tr>
+            <tr>
+              <td><strong>Viper</strong></td>
+              <td>Controlador</td>
+              <td>54.3%</td>
+              <td>54.1%</td>
+              <td><span class="card-badge badge-a" style="position: static;">Especialista</span></td>
+              <td>Breeze / Bind</td>
+              <td style="color: var(--gold-meta);">↘ Ajustada</td>
+            </tr>
+            <tr>
+              <td><strong>Cypher</strong></td>
+              <td>Sentinela</td>
+              <td>51.9%</td>
+              <td>52.3%</td>
+              <td><span class="card-badge badge-a" style="position: static;">Anti-Flank Padrão</span></td>
+              <td>Sunset / Split</td>
+              <td style="color: var(--cyan-radiant);">↗ Em Alta</td>
+            </tr>
+            <tr>
+              <td><strong>Raze</strong></td>
+              <td>Duelista</td>
+              <td>48.6%</td>
+              <td>49.7%</td>
+              <td><span class="card-badge badge-a" style="position: static;">Explosão de Espaço</span></td>
+              <td>Bind / Lotus</td>
+              <td>→ Estável</td>
+            </tr>
+            <tr>
+              <td><strong>Fade</strong></td>
+              <td>Iniciador</td>
+              <td>39.4%</td>
+              <td>51.0%</td>
+              <td><span class="card-badge badge-info" style="position: static;">Recon Alternativo</span></td>
+              <td>Lotus / Sunset</td>
+              <td style="color: var(--cyan-radiant);">↗ Em Alta</td>
+            </tr>
+            <tr>
+              <td><strong>Reyna</strong></td>
+              <td>Duelista</td>
+              <td><span style="color: var(--text-muted);">3.1%</span></td>
+              <td>44.2%</td>
+              <td><span class="card-badge" style="position: static; background: #2a1114; color: #ff6b7b;">Inviável VCT</span></td>
+              <td>N/A (Foco SoloQ)</td>
+              <td style="color: #ff6b7b;">↘ Fora do Meta</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#" onclick="switchTab('home')">Home</a>
+      <a href="#" onclick="switchTab('lore')">Lore & Universo</a>
+      <a href="#" onclick="switchTab('agents')">Agentes</a>
+      <a href="#" onclick="switchTab('maps')">Mapas</a>
+      <a href="#" onclick="switchTab('economy')">Economia</a>
+      <a href="#" onclick="switchTab('glossary')">Glossário</a>
+      <a href="#" onclick="switchTab('meta')">VCT Report</a>
+    </div>
+    <p>VALORANT TACTICAL HUB &bull; Desenvolvido para Alta Retenção, SEO Semântico e Análise Competitiva de E-sports.</p>
+    <p style="font-size: 0.75rem; margin-top: 6px; color: #586470;">VALORANT é marca registrada da Riot Games, Inc. Este portal segue diretrizes da comunidade para dados táticos e análise de pro-play.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update active nav button
+      const navButtons = document.querySelectorAll('.nav-btn');
+      navButtons.forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabId)) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Agent Database
+    const agentsData = [
+      {
+        id: 'omen',
+        name: 'Omen',
+        role: 'Controlador',
+        tier: 'Tier S',
+        desc: 'Mestre da desorientação, capaz de criar fumaças recarregáveis e cegueira atravessa-paredes.',
+        bestMaps: 'Ascent, Haven, Lotus, Split',
+        synergies: 'Fade, Sova, Jett',
+        skills: [
+          { key: 'C', name: 'Passos Tenebrosos', cost: '100 CR', max: '2', cd: 'Sem CD' },
+          { key: 'Q', name: 'Paranoia', cost: '300 CR', max: '1', cd: 'Sem CD' },
+          { key: 'E', name: 'Manto Sombrio (Smoke)', cost: 'Grátis (1 extra 150)', max: '2', cd: '30s por carga' },
+          { key: 'X', name: 'Salto das Sombras (Ult)', cost: '7 Pontos', max: '1', cd: 'Canalizado' }
+        ],
+        combos: [
+          'Paranoia em ângulo de 90° sincronizada com entrada veloz de Jett ou Raze.',
+          'One-Way Smoke repousada no batente alto para ver os pés dos invasores primeiro.',
+          'Teleporte Passos Tenebrosos mascarado pelo estrondo de granadas ou dardos.'
+        ],
+        mistakes: [
+          'Smoke profunda que dá cobertura ao avanço inimigo em vez de nivelar no batente.',
+          'Gastar Ultimate no início do round sem propósito de cancelamento para scout preciso.'
+        ]
+      },
+      {
+        id: 'jett',
+        name: 'Jett',
+        role: 'Duelista',
+        tier: 'Tier S',
+        desc: 'Mobilidade incomparável com o Tailwind e capacidade de operar com Operador e Facas letais.',
+        bestMaps: 'Ascent, Breeze, Haven',
+        synergies: 'Breach, Sova, Omen',
+        skills: [
+          { key: 'C', name: 'Erupção das Brumas', cost: '200 CR', max: '2', cd: 'Sem CD' },
+          { key: 'Q', name: 'Corrente Ascendente', cost: '150 CR', max: '1', cd: 'Sem CD' },
+          { key: 'E', name: 'Brisa de Impulso (Dash)', cost: 'Grátis', max: '1', cd: '2 Abates' },
+          { key: 'X', name: 'Tormenta de Aço (Ult)', cost: '8 Pontos', max: '1', cd: 'Reset no kill' }
+        ],
+        combos: [
+          'Smoke no centro do bomb site + Dash para o interior para quebrar a mira da defesa.',
+          'Uso da Tormenta de Aço em rounds econômicos do time para pescar armas de alto valor.',
+          'Combinação com Flash de Breach: espere o flash cegar antes de acionar o dash.'
+        ],
+        mistakes: [
+          'Dar o dash antes que os utilitários de suporte do time cheguem ao chokepoint.',
+          'Uso agressivo do segundo pulo sem cobertura aérea contra miras pré-posicionadas.'
+        ]
+      },
+      {
+        id: 'sova',
+        name: 'Sova',
+        role: 'Iniciador',
+        tier: 'Tier S',
+        desc: 'O arqueiro da informação absoluta. Mapeia posições e finaliza alvos com a Fúria do Caçador.',
+        bestMaps: 'Ascent, Icebox, Breeze, Haven',
+        synergies: 'Killjoy, Omen, Jett',
+        skills: [
+          { key: 'C', name: 'Drone Coruja', cost: '400 CR', max: '1', cd: 'Sem CD' },
+          { key: 'Q', name: 'Flecha de Choque', cost: '150 CR', max: '2', cd: 'Sem CD' },
+          { key: 'E', name: 'Flecha Rastreadora', cost: 'Grátis', max: '1', cd: '40s CD' },
+          { key: 'X', name: 'Fúria do Caçador (Ult)', cost: '8 Pontos', max: '3 tiros', cd: 'Instantâneo' }
+        ],
+        combos: [
+          'Flecha Rastreadora alta no Gerador + Fúria do Caçador imediata em alvos revelados.',
+          'Drone Coruja abrindo caminho à frente do duelista para marcar alvos em ângulos fechados.',
+          'Double Shock Dart sincronizado sobre a Spike durante o desarmamento inimigo.'
+        ],
+        mistakes: [
+          'Ficar estático e vulnerável enquanto pilota o Drone sem ninguém para cobrir suas costas.',
+          'Disparar flechas sem cálculo de ricochete que caem na mira direta de quem está espiando.'
+        ]
+      },
+      {
+        id: 'killjoy',
+        name: 'Killjoy',
+        role: 'Sentinela',
+        tier: 'Tier S',
+        desc: 'Engenheira de contenção. Bloqueia bombs inteiros e comanda retakes com o Confinamento.',
+        bestMaps: 'Haven, Ascent, Lotus',
+        synergies: 'Sova, Viper, Brimstone',
+        skills: [
+          { key: 'C', name: 'Nanoenxame (Molotov)', cost: '200 CR', max: '2', cd: 'Sem CD' },
+          { key: 'Q', name: 'Alarmebot', cost: '200 CR', max: '1', cd: '20s se recolhido' },
+          { key: 'E', name: 'Torreta', cost: 'Grátis', max: '1', cd: '20s se recolhida / 45s destruída' },
+          { key: 'X', name: 'Confinamento (Ult)', cost: '9 Pontos', max: '1', cd: '13s para detonar' }
+        ],
+        combos: [
+          'Alarmebot posicionado junto ao Nanoenxame para causar dano dobrado (Vulnerável).',
+          'Posicionamento de Torreta em elevações para detectar entradas e chamar a atenção dos atacantes.',
+          'Confinamento de Retake no bomb B de Haven forçando evacuação completa do local.'
+        ],
+        mistakes: [
+          'Ficar fora do raio de alcance dos dispositivos (perdendo ativação da Torreta/Alarmebot).',
+          'Posicionar a Ultimate sem proteger contra wallbangs de armas pesadas ou flechas de Sova.'
+        ]
+      }
+    ];
+
+    function renderAgents(list) {
+      const container = document.getElementById('agents-grid-container');
+      container.innerHTML = '';
+      list.forEach(agent => {
+        const card = document.createElement('div');
+        card.className = 'agent-card-item';
+        card.onclick = () => selectAgent(agent.id);
+        card.innerHTML = `
+          <div>
+            <div class="agent-card-header">
+              <span class="agent-name">${agent.name}</span>
+              <span class="agent-role-tag">${agent.role}</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">${agent.desc}</p>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 8px;">
+            <span class="card-badge badge-s" style="position: static;">${agent.tier}</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-radiant);">Ver Guia Pro &rarr;</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function selectAgent(agentId) {
+      const agent = agentsData.find(a => a.id === agentId);
+      if (!agent) return;
+
+      const detailView = document.getElementById('agent-detail-view');
+      detailView.innerHTML = `
+        <div class="inspector-header">
+          <div>
+            <div class="inspector-title">
+              <span>${agent.name}</span>
+              <span class="agent-role-tag" style="font-size: 0.9rem;">${agent.role}</span>
+              <span class="card-badge badge-s" style="position: static;">${agent.tier}</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">${agent.desc}</p>
+          </div>
+          <div style="text-align: right; font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan-radiant);">
+            MAPAS TIER S: ${agent.bestMaps}<br>
+            SINERGIA PRO: ${agent.synergies}
+          </div>
+        </div>
+
+        <h4 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--cyan-radiant); margin-bottom: 10px;">
+          TABELA TÉCNICA DE HABILIDADES
+        </h4>
+        <div class="tactical-table-wrapper" style="margin-bottom: 20px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Tecla</th>
+                <th>Nome da Habilidade</th>
+                <th>Custo de Créditos</th>
+                <th>Cargas Máximas</th>
+                <th>Cooldown / Recarga</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${agent.skills.map(s => `
+                <tr>
+                  <td><strong style="color: var(--red-riot);">${s.key}</strong></td>
+                  <td>${s.name}</td>
+                  <td>${s.cost}</td>
+                  <td>${s.max}</td>
+                  <td>${s.cd}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="background: #080c10; padding: 18px; border-radius: 6px; border-left: 3px solid var(--cyan-radiant);">
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: #fff; margin-bottom: 8px;">
+              3 DICAS DE PRO-PLAY & COMBOS
+            </h4>
+            <ul style="padding-left: 18px; font-size: 0.88rem; color: var(--text-muted);">
+              ${agent.combos.map(c => `<li style="margin-bottom: 6px;">${c}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div style="background: #080c10; padding: 18px; border-radius: 6px; border-left: 3px solid var(--red-riot);">
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: #fff; margin-bottom: 8px;">
+              ERROS COMUNS DE ELO BAIXO
+            </h4>
+            <ul style="padding-left: 18px; font-size: 0.88rem; color: var(--text-muted);">
+              ${agent.mistakes.map(m => `<li style="margin-bottom: 6px;">${m}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterRole(role) {
+      document.querySelectorAll('.role-filter-bar .filter-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(role) || (role === 'all' && btn.textContent.includes('Todos')));
+      });
+
+      if (role === 'all') {
+        renderAgents(agentsData);
+      } else {
+        const filtered = agentsData.filter(a => a.role === role);
+        renderAgents(filtered);
+      }
+    }
+
+    // Glossary Database
+    const glossaryTerms = [
+      { name: 'Trade Kill', def: 'Abater o adversário no milissegundo seguinte à morte de um aliado, mantendo a igualdade numérica.', ex: 'Mantenham o espaçamento de 3m para garantir o trade no avanço.' },
+      { name: 'Anti-Eco', def: 'Round disputado contra um adversário sem créditos para compra de rifles.', ex: 'Em anti-eco, mantenha distâncias longas com Vandal contra Classics/Shortys.' },
+      { name: 'Default', def: 'Posicionamento ofensivo distribuído no mapa para coletar informação sem comprometer um bomb.', ex: 'Default 1-3-1 em Ascent para testar onde está o Operador da defesa.' },
+      { name: 'Flank', def: 'Avanço contornando as costas da rota inimiga para punir rotações desatentas.', ex: 'Cuidado com o flanco da Reyna pelo spawn dos atacantes.' },
+      { name: 'Lineup', def: 'Lançamento geométrico de habilidades de dano/revelação a longa distância com pontos de referência visuais.', ex: 'Lineup de molotov da Viper da Base Atacante para cobrir o desarmamento da Spike.' },
+      { name: 'Lurker', def: 'Jogador que atua separado do grupo principal para cortar rotações e coletar informação por som.', ex: 'O Cypher de lurker puniu os dois defensores que correram pelo meio.' },
+      { name: 'Crossfire (Fogo Cruzado)', def: 'Dois jogadores miram o mesmo corredor de ângulos opostos.', ex: 'Montamos crossfire entre Gerador e Vinho na Ascent.' },
+      { name: 'Jiggle Peek', def: 'Movimento de strafe ultra-rápido para dentro e fora da cobertura apenas para obter informação sem se expor.', ex: 'Faça jiggle peek para checar se o Operador está cravado na porta.' },
+      { name: 'Exit Frags', def: 'Abates realizados sobre inimigos que estão fugindo da explosão da Spike.', ex: 'Pegamos dois exit frags para estragar a economia deles pro próximo round.' },
+      { name: 'Heaven / Hell', def: 'Callouts universais que designam a posição elevada (Heaven/Torre) e a área imediatamente abaixo (Hell/Sub-torre).', ex: 'Tem um plantado no Hell da A e outro cravado no Heaven.' }
+    ];
+
+    function renderGlossary(list) {
+      const container = document.getElementById('terms-container');
+      container.innerHTML = '';
+      list.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'term-card';
+        card.innerHTML = `
+          <div class="term-name">${t.name}</div>
+          <div class="term-def">${t.def}</div>
+          <div class="term-example">Exemplo: "${t.ex}"</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterGlossary() {
+      const query = document.getElementById('glossarySearch').value.toLowerCase();
+      const filtered = glossaryTerms.filter(t => 
+        t.name.toLowerCase().includes(query) || 
+        t.def.toLowerCase().includes(query) ||
+        t.ex.toLowerCase().includes(query)
+      );
+      renderGlossary(filtered);
+    }
+
+    // Economy Calculator
+    function calculateEconomy() {
+      const creds = parseInt(document.getElementById('teamCredits').value) || 0;
+      const streak = parseInt(document.getElementById('lossStreak').value) || 0;
+      const context = document.getElementById('matchContext').value;
+      const headline = document.getElementById('verdictHeadline');
+      const text = document.getElementById('verdictText');
+      const box = document.getElementById('ecoVerdict');
+
+      let nextLossBonus = 1900;
+      if (streak === 1) nextLossBonus = 2400;
+      if (streak >= 2) nextLossBonus = 2900;
+
+      const projectedNext = creds + nextLossBonus;
+
+      if (context === 'last_half') {
+        box.style.borderLeftColor = 'var(--red-riot)';
+        headline.style.color = 'var(--red-riot)';
+        headline.textContent = 'FORCE BUY TOTAL // ÚLTIMO ROUND DA METADE';
+        text.textContent = 'Não existe economia acumulada para a próxima metade. Todo o time deve gastar 100% dos créditos disponíveis em armas, coletes e todas as habilidades.';
+        return;
+      }
+
+      if (context === 'round2') {
+        box.style.borderLeftColor = 'var(--cyan-radiant)';
+        headline.style.color = 'var(--cyan-radiant)';
+        headline.textContent = 'COMPRA DE CONVERSÃO // ANTI-ECO (ROUND 2)';
+        text.textContent = 'Após vencer o Pistol, comprem Bulldogs, Spectres ou Outlaws com Escudo Pesado. Não guardem dinheiro; vencer o Round 2 contra as pistolas inimigas é mandatório!';
+        return;
+      }
+
+      if (context === 'round3') {
+        box.style.borderLeftColor = 'var(--gold-meta)';
+        headline.style.color = 'var(--gold-meta)';
+        headline.textContent = 'BONUS ROUND (ROUND 3)';
+        text.textContent = 'Mantenham as armas compradas no Round 2 contra os rifles inimigos. O objetivo é abater 2 a 3 rifles adversários para causar sangria econômica, garantindo Full Buy no Round 4.';
+        return;
+      }
+
+      if (creds >= 4300) {
+        box.style.borderLeftColor = 'var(--cyan-radiant)';
+        headline.style.color = 'var(--cyan-radiant)';
+        headline.textContent = 'FULL BUY (COMPRA PLENA)';
+        text.textContent = `Créditos suficientes (${creds} CR). Comprem Vandal/Phantom + Escudo Pesado (1000 CR) e kit completo de habilidades. Exijam trocas e setups de bomb simétricos.`;
+      } else if (projectedNext >= 3900 && creds < 3900) {
+        box.style.borderLeftColor = 'var(--gold-meta)';
+        headline.style.color = 'var(--gold-meta)';
+        headline.textContent = 'ECO ROUND (ECONOMIA ESTRITA)';
+        text.textContent = `Saldo atual: ${creds} CR. Com bônus de derrota projetado (+${nextLossBonus} CR), vocês terão ${projectedNext} CR no round seguinte. Economizem agora (apenas Classic ou pistola leve até sobrar reserva) para garantir Full Buy na próxima rodada.`;
+      } else {
+        box.style.borderLeftColor = 'var(--red-riot)';
+        headline.style.color = 'var(--red-riot)';
+        headline.textContent = 'FORCE BUY TÁTICO OU MEIO-ECO';
+        text.textContent = `Saldo crítico (${creds} CR). Se o time optar por forçar, comprem armas intermediárias (Spectre/Ares + Meio Escudo). Se optarem por guardar, não gastem mais do que 300 créditos em utilitário leve.`;
+      }
+    }
+
+    // Map Selector Mock
+    function selectMap(mapKey) {
+      document.querySelectorAll('#tab-maps .filter-pill').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const container = document.getElementById('map-content-container');
+      if (mapKey === 'bind') {
+        container.innerHTML = `
+          <div class="card" style="margin-bottom: 24px; border-left: 4px solid var(--red-riot);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 1.8rem; color: #fff;">BIND // MARROCOS [MAP POOL ATIVO]</h3>
+              <span class="card-badge badge-s">TIER S: RAZE & VIPER</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+              Ausência de meio tradicional compensada por dois teletransportadores unidirecionais de som global. Exige controle rigoroso dos chokepoints de Banho (Shower) e Hookah.
+            </p>
+          </div>
+          <div class="grid-4" style="grid-template-columns: 1fr 1fr;">
+            <div class="card">
+              <span class="card-badge badge-info">PONTOS DE CHOQUE</span>
+              <h3 style="color: var(--cyan-radiant);">Hookah & Banheiro (A)</h3>
+              <p>Hookah é vulnerável a spam de granadas e feixes de dano de Raze e Brimstone. O Banheiro exige smokes profundas para negar linhas de Operador da defesa.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-s">ROTAÇÃO DINÂMICA</span>
+              <h3 style="color: var(--red-riot);">Uso do Teleporte</h3>
+              <p>O som do teleporte ecoa por todo o mapa. Utilize utilitários sonoros ou jogue armas no portal para simular rotações falsas (fake teleports).</p>
+            </div>
+          </div>
+        `;
+      } else if (mapKey === 'haven') {
+        container.innerHTML = `
+          <div class="card" style="margin-bottom: 24px; border-left: 4px solid var(--gold-meta);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 1.8rem; color: #fff;">HAVEN // BUTÃO [3 BOMB SITES]</h3>
+              <span class="card-badge badge-s">TIER S: KILLJOY & BREACH</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+              O único mapa com três bomb sites (A, B, C) exigindo rotações rápidas e ancoragem de Sentinela em C ou B para não sobrecarregar os defensores.
+            </p>
+          </div>
+          <div class="grid-4" style="grid-template-columns: 1fr 1fr;">
+            <div class="card">
+              <span class="card-badge badge-info">GARAGEM & MEIO</span>
+              <h3 style="color: var(--cyan-radiant);">Controle Central</h3>
+              <p>A Garagem conecta o ataque tanto ao B quanto ao C. Sem um Sentinela ancorando Garagem, a defesa colapsa por infiltração traseira.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-s">RETAKE TRIPLO</span>
+              <h3 style="color: var(--red-riot);">Dificuldade de Retake</h3>
+              <p>Com 3 bombs, retakes em Haven são os mais difíceis do jogo. Se o plant for no C, é preferível guardar armas caso o time defensor esteja em minoria numérica (ex: 3v4).</p>
+            </div>
+          </div>
+        `;
+      } else if (mapKey === 'lotus') {
+        container.innerHTML = `
+          <div class="card" style="margin-bottom: 24px; border-left: 4px solid var(--cyan-radiant);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 1.8rem; color: #fff;">LOTUS // ÍNDIA [3 BOMBS & PORTAS GIRATÓRIAS]</h3>
+              <span class="card-badge badge-s">TIER S: OMEN & FADE</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+              Mapa de três bomb sites com portas de pedra giratórias acionáveis e drop vertical no C. Foco em agressão rápida de Iniciadores.
+            </p>
+          </div>
+        `;
+      } else {
+        // Reset to Ascent
+        location.reload();
+      }
+    }
+
+    // Init
+    window.onload = function() {
+      renderAgents(agentsData);
+      selectAgent('omen');
+      renderGlossary(glossaryTerms);
+      calculateEconomy();
+    };
+  </script>
+</body>
+</html>
